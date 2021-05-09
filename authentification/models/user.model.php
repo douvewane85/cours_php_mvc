@@ -1,50 +1,23 @@
 <?php 
-   
+
   function get_users():array{
-      if(!isset($_SESSION['users'])) {
-        $users=[
-            [
-              "nom_complet"=>"Birane Baila Wane",
-               "login"=> "douvewane85@gmail.com",
-               "password"=> "passer",
-               "role"=> "Admin"
-            ],
-            [
-              "nom_complet"=>"Birane Baila Wane",
-               "login"=> "douvewane86@gmail.com",
-               "password"=> "passer",
-               "role"=> "Visiteur"
-            ],
-           ];
-         $_SESSION['users']=$users;
-      }
-      return $_SESSION['users'];
+         $data=execute_select("select * from users");
+         return $data['data'];
   }
 
-  function get_user_by_login_password(string $login,string $password){
-        $users=get_users();
-         foreach ($users as $key => $user) {
-              if($user['login']==$login && $user['password']==$password ){
-                 return $user;
-              }
-         }
-         return null;
+  function get_user_by_login_password(string $login,string $password){   
+      $data=execute_select("select * from users where login=? and password=?  ",[$login,$password],true);
+      return  $data['data']==false?null:$data['data'];
    }
 
    function insert_user(array $user):void{
-      $users=get_users();
-      $users[]=$user;
-      $_SESSION['users']=$users; 
+      $result= execute_update("INSERT INTO users VALUES (NULL,?,?,?,?)",$user);
    }
 
    function login_exist(string $login):bool{
-    $users=get_users();
-     foreach ($users as $key => $user) {
-          if($user['login']==$login ){
-             return true;
-          }
-     }
-     return false;
-}
+      $data=execute_select("select * from users where login=? ",[$login],true);
+      
+      return  $data['row_count']!=0;
+   }
 
   

@@ -1,10 +1,8 @@
 <?php 
-     //Inclusion du model
-       require_once(ROOT."models/user.model.php");
-       $users=get_users();
+    ob_start();
        require_once(PATH_VIEWS_INC."header.php"); 
        require_once(PATH_VIEWS_INC."menu.inc.php");
-
+       $users=get_users();
  ?>
   
     <h3>Liste des Utilisateurs</h3>
@@ -31,6 +29,8 @@
          
        </div>
     
- <?php 
-       require_once(PATH_VIEWS_INC."footer.php");
+<?php 
+      $content_for_layout=ob_get_clean() ;
+      require_once(PATH_VIEWS."layout.front.html.php"); 
  ?>
+ 

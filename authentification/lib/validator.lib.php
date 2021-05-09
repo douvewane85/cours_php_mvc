@@ -12,6 +12,9 @@
 
   function get_errors_vide(array $data,&$arr_error):void{
     foreach ($data as $key => $value) {
+      if($key!="bien_id"){
         est_vide($value,$key,$arr_error);
+      }
+      
     }
   }

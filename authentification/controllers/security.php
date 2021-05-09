@@ -1,16 +1,11 @@
 <?php
-  //Inclusion du validator
-  require_once(ROOT."lib/validator.lib.php");
-  require_once(ROOT."lib/request.lib.php");
-  //Inclusion du model
-  require_once(ROOT."models/user.model.php");
- 
-    
     switch ($_POST['btn_submit']) {
         case 'btn_login': 
+            unset($_POST['controller']);
            se_connecter($_POST);
              break;
         case 'btn_register':
+             unset($_POST['controller']);
             register($_POST);
              break;
         default:
@@ -30,19 +25,25 @@
                 $_SESSION["arr_error"]=$arr_error;
                  redirect_url('login'); 
              }else{
+                //var_dump($user); die;
                 $_SESSION['user_connect']=$user;
                  if($user['role']=="Admin"){
-                    redirect_url('accueil.admin');
+                    
+                    redirect_url("reservation",'show.reservation');
                     exit();
                  }elseif($user['role']=="Visiteur"){
-                    redirect_url('accueil.visiteur');
+                    if(!empty($data['bien_id'])){
+                        redirect_url("reservation",'reservation.visiteur',$data['action']."&bien_id=".$data['bien_id']);
+                    }
+                    redirect_url("bien",'catalogue.bien');
                     
                  }
              } 
         }else{
             //Stocker les erreurs dans la session
+            var_dump($arr_error); die;
              $_SESSION["arr_error"]=$arr_error;
-               redirect_url('login');
+               redirect_url("security",'login');
         }
     }
     function register($data):void {

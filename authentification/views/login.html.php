@@ -1,11 +1,11 @@
  <?php
+   ob_start();
       $arr_error=[]; 
       if(isset($_SESSION['arr_error'])){
             $arr_error=$_SESSION['arr_error'];
             unset($_SESSION['arr_error']);
       }
-       require_once(PATH_VIEWS_INC."header.php"); 
-       require_once(PATH_VIEWS_INC."menu.inc.php"); 
+       
  ?>
  
       <div class="container mt-5">
@@ -15,7 +15,11 @@
            </div>
         <?php endif ?>
           <form class ="ml-5" method="post" action="<?=WEBROOT.'index.php'?>">
-            <div class="form-group col-8">
+            <input type="hidden" name="controller" value="security">
+            <input type="hidden" name="action" value="reservation.visiteur">
+            <input type="hidden" name="bien_id" value="<?= isset($_GET['bien_id'])?$_GET['bien_id']:""?>">
+
+             <div class="form-group col-8">
                 <label >Email </label>
                 <input type="text" class="form-control"  placeholder="Enter email" name="login">
                    <?php if(isset($arr_error['login'])):?>
@@ -35,6 +39,8 @@
             
          </form>
       </div>
- <?php 
-          require_once(PATH_VIEWS_INC."footer.php"); 
- ?>
+   <?php 
+         $content_for_layout=ob_get_clean() ;
+         require_once(PATH_VIEWS."layout.front.html.php"); 
+   ?>
+ 

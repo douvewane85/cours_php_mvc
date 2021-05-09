@@ -1,15 +1,15 @@
 <?php 
+   ob_start();
      $arr_error=[]; 
      if(isset($_SESSION['arr_error'])){
            $arr_error=$_SESSION['arr_error'];
            unset($_SESSION['arr_error']);
      }
-       require_once(PATH_VIEWS_INC."header.php"); 
-       require_once(PATH_VIEWS_INC."menu.inc.php");; 
  ?>
  
       <div class="container mt-5">
           <form class ="ml-5" method="post" action="<?=WEBROOT.'index.php'?>">
+            <input type="hidden" name="controller" value="security">
           <div class="form-group col-8">
                 <label >Email </label>
                 <input type="text" class="form-control"  placeholder="Enter email" name="nom_complet">
@@ -50,10 +50,12 @@
          </form>
       </div>
      
- <?php 
-      require_once(PATH_VIEWS_INC."footer.php"); 
- ?>
+      <?php 
+         $content_for_layout=ob_get_clean() ;
+         require_once(PATH_VIEWS."layout.front.html.php"); 
+      ?>
+ 
 
-<div class="form-group col-8">
+
               
            

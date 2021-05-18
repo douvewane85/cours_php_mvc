@@ -1,0 +1,16 @@
+{
+    "name": "user/authentification",
+    "description": "Projet MVC POO",
+    "authors": [
+        {
+            "name": "douvewane",
+            "email": "douvewane85@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "bbw_mvc\\": "."
+        }
+    },
+    "require": {}
+}

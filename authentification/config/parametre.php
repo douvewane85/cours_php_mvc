@@ -6,6 +6,6 @@
   define("PATH_DATA",ROOT."data".DIRECTORY_SEPARATOR);
   define("PATH_ROUTE",ROOT."router".DIRECTORY_SEPARATOR);
   //Dossier Public
-  define("WEBROOT",str_replace("index.php","",$_SERVER['SCRIPT_NAME']));
-  //Dossier Controller
-  define("PATH_CONTROLLERS",WEBROOT."controllers".DIRECTORY_SEPARATOR);
+  define("WEBROOT","http://localhost:8001/index.php/");
+  define("WEBIMG","http://localhost:8001/authentification/public/");
+ 

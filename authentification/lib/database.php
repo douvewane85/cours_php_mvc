@@ -40,7 +40,7 @@ function executeSelect(string $sql,array $data=null,$sigle=false):array{
 }
 
 function executeUpdate(string $sql,array $data=null):int{
-    $stm=  $this->pdo->prepare($sql);
+    $stm=$this->pdo->prepare($sql);
       if(is_null($data)){
         $stm->execute();
       }else{

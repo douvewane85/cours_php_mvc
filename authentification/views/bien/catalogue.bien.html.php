@@ -28,7 +28,7 @@
                     <hr />
                     <span class="float-left btn btn-sm btn-outline-danger disabled ml-2">4.000.000FCFA</span>
                     <a href="<?= $_SERVER["DOCUMENT_ROOT"].'index.php?controler=bien&page=edit.bien&id='.$bien['id']?>" class="btn btn-sm btn-outline-info ml-2 "><i class="fas fa-ellipsis-h">Detail</i></a>
-                    <a href="<?=!Session::isConnect()?"index.php?controler=security&page=login&action=reservation.visiteur&bien_id=".$bien['id']:"index.php?controler=reservation&page=reservation.visiteur&action=reservation.visiteur&bien_id=".$bien['id'] ?>" class="btn btn-sm btn-outline-warning "
+                    <a href="<?=WEBROOT."reservation/doReservation/".$bien['id']?>" class="btn btn-sm btn-outline-warning "
                         >Reserver</a
                     >
                    

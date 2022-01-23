@@ -39,7 +39,7 @@
             <?php endif?>
             <?php if(Role::isVisiteur()):?>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="<?=WEBROOT.'index.php?controler=reservation&page=show.reservation.client'?>">Mes Reservations</a>
+                    <a class="nav-link text-white" href="<?= WEBROOT."reservation/showReservationClient/".Session::getSession("user_connect")["id"]?>">Mes Reservations</a>
                 </li>
             <?php endif?>
            

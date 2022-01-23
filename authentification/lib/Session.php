@@ -21,6 +21,7 @@ class Session{
    public static function getSession($key){
        return  $_SESSION[$key];
    }
+ 
    
   public static function  isConnect():bool{
         return isset($_SESSION['user_connect']);

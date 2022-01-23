@@ -15,21 +15,15 @@ class ReservationModel extends AbstractModel{
         {
             return $this->database->executeSelect("select * from reservation r,users cl, bien b where r.client_id=cl.id and b.id=r.bien_id and r.etat='Encours' order by create_at desc");
         }
+        
      function insert(array $reservation):int{
          extract($reservation);
-         $result=  $this->persist("INSERT INTO `bien` (`id`,ref, `type`, `description`, tags ,`create_at_bien`, `publier` ,photo) VALUES (NULL, ?, ?, ?, ?,?,?,?)",   
+         $result=  $this->persist("INSERT INTO `reservation` (`bien_id`, `client_id`, `create_at`, `etat` ) VALUES (?, ?, ?, ?)",   
            [
-          "REF". uniqid(),
-          $type,$description,
-          isset($tags)?json_encode($tags):null ,
-          date_format(date_create(), 'Y-m-d'),
-          $publier,
-          empty($photo)?"":$photo
-      ]);
-        return $result;
-
-        $result= $this->persist("INSERT INTO `reservation` (`id`, `bien_id`, `client_id`, `create_at`, `etat`) VALUES (NULL, ?, ?, ?, ?)",
-        [$bien_id,$user_id, date_format(date_create(), 'Y-m-d'),"Encours"]);
+            $bien_id, $client_id,
+            date_format(date_create(), 'Y-m-d'),
+            "Encours"
+       ]);
         return $result;
      }
 
@@ -61,5 +55,7 @@ class ReservationModel extends AbstractModel{
         }
           return $this->database->executeSelect($sql,$arr_data);
   }
+
+ 
        
 }

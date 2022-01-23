@@ -27,22 +27,29 @@ class SecurityController extends AbstractController{
              $this->validator->getErrorsVide($request->getBody());
              if( $this->validator->formValide()){
                  extract($request->getBody());
-                $user= $this->model->findUserByLoginAndassword($login,$password);
+                $user= $this->model->findUserByLoginAndassword($login);
                  if(is_null($user)){
                     $this->validator->setErrors('err_login',"Login ou Mot de passe Incorrect");
                     Session::setSession("arr_error",$this->validator->getErrors());
                     $this->render('security/login'); 
                  }else{
-                     Session::setSession("user_connect",$user);
-                     if(Role::isAdmin()){
-                        $this->redirectUrl("reservation/reservation");
-                     }elseif(Role::isVisiteur()){
-                       /* if(!empty($data['bien_id'])){
-                            redirect_url("reservation",'reservation.visiteur',$data['action']."&bien_id=".$data['bien_id']);
-                        }*/
-                        //var_dump("OK"); die;
-                        $this->redirectUrl("bien/catalogue");
-                     }
+                    // var_dump(password_verify('$2y$10$ndVFtUc0dnHYK02ihO7qDORBYOZGb007WTHzwDeUCoW', "visiteur5"));die;
+                    if (password_verify($password, $user['password'])) {
+                        Session::setSession("user_connect",$user);
+                        if(Session::keyExist("action") && Session::getSession("action")=="reservation") $this->redirectUrl("reservation/addReservation");
+                      
+                        if(Role::isAdmin()){
+                           $this->redirectUrl("reservation/reservation");
+                        }elseif(Role::isVisiteur()){
+                          
+                           $this->redirectUrl("bien/catalogue");
+                        }
+                    } else {
+                        $this->validator->setErrors('err_login',"Mot de passe Incorrect");
+                        Session::setSession("arr_error",$this->validator->getErrors());
+                        $this->render('security/login');
+                    }
+                     
                  } 
             }else{
                
@@ -68,7 +75,9 @@ class SecurityController extends AbstractController{
                     Session::setSession("arr_error",$this->validator->getErrors());
                     $this->render('security/register'); 
                 }else{
-                    $this->model->insert($request->getBody());
+                    $data=$request->getBody();
+                    $data['password']= password_hash( $data['password'], PASSWORD_DEFAULT);
+                    $this->model->insert($data);
                     $this->login($request);
                 } 
            }else{

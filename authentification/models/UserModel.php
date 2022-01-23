@@ -11,8 +11,8 @@ class UserModel extends AbstractModel {
        $this->tableName="users";
     }
 
-    public function findUserByLoginAndassword(string $login,string $password){   
-        $data=$this->findBy("select * from users where login=? and password=?  ",[$login,$password],true);
+    public function findUserByLoginAndassword(string $login){   
+        $data=$this->findBy("select * from users where login=? ",[$login],true);
         return  $data['data']==false?null:$data['data'];
      }
   
